@@ -2,6 +2,7 @@ import { type Request, type Response } from 'express'
 
 import { logger } from '../utils/logger'
 import { createProductValidation } from '../validation/product_validation'
+import { getProductFromDB } from '../services/product_service'
 
 export const createProduct = (req: Request, res: Response): Response<any, Record<string, any>> => {
   const { error, value } = createProductValidation(req.body)
@@ -13,18 +14,15 @@ export const createProduct = (req: Request, res: Response): Response<any, Record
   return res.status(200).send({ status: true, statusCode: 200, message: 'Add product success', data: value })
 }
 
-export const getProduct = (req: Request, res: Response): Response<any, Record<string, any>> => {
-  const products = [
-    { name: 'Sepatu', price: 200000 },
-    { name: 'Kaos', price: 100000 }
-  ]
+export const getProduct = async (req: Request, res: Response): Promise<any> => {
+  const products: any = await getProductFromDB()
   //   console.log(req.query) Bisa gunakan query atau params
   const {
     params: { name }
   } = req
 
   if (name) {
-    const filterProduct = products.filter((product) => {
+    const filterProduct = products.filter((product: { name: string }) => {
       if (product.name === name) {
         return product
       }

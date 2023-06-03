@@ -1,4 +1,5 @@
 import { type Request, type Response } from 'express'
+
 import { logger } from '../utils/logger'
 import { createProductValidation } from '../validation/product_validation'
 

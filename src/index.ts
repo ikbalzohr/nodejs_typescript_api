@@ -1,7 +1,12 @@
 import express, { type Application } from 'express'
 import bodyParser from 'body-parser'
 import cors from 'cors'
+
 import { routes } from './routes'
+import { logger } from './utils/logger'
+
+// connect DB
+import './utils/connectToDB'
 
 const app: Application = express()
 const port: number = 4000
@@ -22,5 +27,5 @@ app.use((req, res, next) => {
 routes(app)
 
 app.listen(port, () => {
-  console.log(`Server sedang berjalan pada port ${port}`)
+  logger.info(`Server is listening on port ${port}`)
 })

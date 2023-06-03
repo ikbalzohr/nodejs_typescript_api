@@ -1,4 +1,5 @@
 import { type Application, type Router } from 'express'
+
 import { ProductRouter } from './product_route'
 
 const _routes: Array<[string, Router]> = [['/product', ProductRouter]]

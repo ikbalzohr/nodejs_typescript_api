@@ -1,4 +1,5 @@
 import { Router } from 'express'
+
 import { createProduct, getProduct } from '../controller/product_controller'
 
 export const ProductRouter: Router = Router()

@@ -1,7 +1,7 @@
 import express, { type Application } from 'express'
-import { routes } from './routes'
 import bodyParser from 'body-parser'
 import cors from 'cors'
+import { routes } from './routes'
 
 const app: Application = express()
 const port: number = 4000

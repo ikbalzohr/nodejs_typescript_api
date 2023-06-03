@@ -1,40 +1,41 @@
 import { type Request, type Response } from 'express'
 
 import { logger } from '../utils/logger'
-import { createProductValidation } from '../validation/product_validation'
-import { getProductFromDB } from '../services/product_service'
+import { addProductValidation } from '../validation/product_validation'
+import { addProductToDB, getProductById, getProductFromDB } from '../services/product_service'
 
-export const createProduct = (req: Request, res: Response): Response<any, Record<string, any>> => {
-  const { error, value } = createProductValidation(req.body)
+export const createProduct = async (req: Request, res: Response): Promise<any> => {
+  const { error, value } = addProductValidation(req.body)
   if (error) {
     logger.error('ERR: product - create = ', error.details[0].message)
-    return res.status(422).send({ status: false, statusCode: 422, message: error.details[0].message, data: {} })
+    return res.status(422).send({ status: false, statusCode: 422, message: error.details[0].message })
   }
-  logger.info('Success add new product')
-  return res.status(200).send({ status: true, statusCode: 200, message: 'Add product success', data: value })
+  try {
+    await addProductToDB(value)
+    logger.info('Success add new product')
+    return res.status(201).send({ status: true, statusCode: 200, message: 'Add product success' })
+  } catch (error) {
+    logger.error('ERR: product - create = ', error)
+    return res.status(422).send({ status: false, statusCode: 422, message: error })
+  }
 }
 
 export const getProduct = async (req: Request, res: Response): Promise<any> => {
-  const products: any = await getProductFromDB()
-  //   console.log(req.query) Bisa gunakan query atau params
   const {
-    params: { name }
+    params: { id }
   } = req
 
-  if (name) {
-    const filterProduct = products.filter((product: { name: string }) => {
-      if (product.name === name) {
-        return product
-      }
-    })
-    if (filterProduct.length === 0) {
-      logger.info('Data not found')
-      return res.status(404).send({ status: false, statusCode: 404, data: {} })
+  if (id) {
+    const product = await getProductById(id)
+    if (product) {
+      logger.info('Success get product data')
+      return res.status(200).send({ status: true, statusCode: 200, data: product })
+    } else {
+      return res.status(200).send({ status: true, statusCode: 404, message: 'Data Not Found', data: {} })
     }
+  } else {
+    const products: any = await getProductFromDB()
     logger.info('Success get product data')
-    return res.status(200).send({ status: true, statusCode: 200, data: filterProduct[0] })
+    return res.status(200).send({ status: true, statusCode: 200, data: products })
   }
-
-  logger.info('Success get product data')
-  return res.status(200).send({ status: true, statusCode: 200, data: products })
 }

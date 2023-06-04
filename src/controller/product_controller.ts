@@ -1,13 +1,13 @@
 import { type Request, type Response } from 'express'
 
 import { logger } from '../utils/logger'
-import { addProductValidation } from '../validation/product_validation'
-import { addProductToDB, getProductById, getProductFromDB } from '../services/product_service'
+import { addProductValidation, updateProductValidation } from '../validation/product_validation'
+import { addProductToDB, getProductById, getProductFromDB, updateProductById } from '../services/product_service'
 
-export const createProduct = async (req: Request, res: Response): Promise<any> => {
+export async function createProduct(req: Request, res: Response): Promise<Response> {
   const { error, value } = addProductValidation(req.body)
   if (error) {
-    logger.error('ERR: product - create = ', error.details[0].message)
+    logger.error(`ERR: product - create = ${error.details[0].message}`)
     return res.status(422).send({ status: false, statusCode: 422, message: error.details[0].message })
   }
   try {
@@ -15,12 +15,12 @@ export const createProduct = async (req: Request, res: Response): Promise<any> =
     logger.info('Success add new product')
     return res.status(201).send({ status: true, statusCode: 200, message: 'Add product success' })
   } catch (error) {
-    logger.error('ERR: product - create = ', error)
+    logger.error(`ERR: product - create = ${error}`)
     return res.status(422).send({ status: false, statusCode: 422, message: error })
   }
 }
 
-export const getProduct = async (req: Request, res: Response): Promise<any> => {
+export async function getProduct(req: Request, res: Response): Promise<Response> {
   const {
     params: { id }
   } = req
@@ -37,5 +37,27 @@ export const getProduct = async (req: Request, res: Response): Promise<any> => {
     const products: any = await getProductFromDB()
     logger.info('Success get product data')
     return res.status(200).send({ status: true, statusCode: 200, data: products })
+  }
+}
+
+export async function updateProduct(req: Request, res: Response): Promise<any> {
+  const {
+    params: { id }
+  } = req
+
+  const { error, value } = updateProductValidation(req.body)
+  console.log(typeof error)
+  if (error) {
+    logger.error(`ERR: product - create = ${error.details[0].message}`)
+    return res.status(422).send({ status: false, statusCode: 422, message: error.details[0].message })
+  }
+
+  try {
+    await updateProductById(id, value)
+    logger.info('Success update product')
+    return res.status(200).send({ status: true, statusCode: 200, message: 'Update product success' })
+  } catch (error) {
+    logger.error(`ERR: product - create = ${error}`)
+    return res.status(422).send({ status: false, statusCode: 422, message: error })
   }
 }

@@ -1,6 +1,6 @@
 import { Router } from 'express'
 
-import { createProduct, getProduct, updateProduct } from '../controller/product_controller'
+import { createProduct, deleteProduct, getProduct, updateProduct } from '../controller/product_controller'
 
 export const ProductRouter: Router = Router()
 
@@ -8,3 +8,4 @@ ProductRouter.get('/', getProduct)
 ProductRouter.get('/:id', getProduct)
 ProductRouter.post('/', createProduct)
 ProductRouter.put('/:id', updateProduct)
+ProductRouter.delete('/:id', deleteProduct)

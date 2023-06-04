@@ -15,7 +15,12 @@ export const getProductFromDB = async (): Promise<any> => {
 }
 
 export const getProductById = async (id: string): Promise<any> => {
-  return await productModel.findOne({ _id: id })
+  const result = await productModel.findOne({ _id: id })
+  return result
+}
+
+export const getProductByName = async (name: string): Promise<any> => {
+  return await productModel.findOne({ name: { $regex: name, $options: 'i' } })
 }
 
 export const addProductToDB = async (payload: ProductType): Promise<any> => {
@@ -29,4 +34,8 @@ export const updateProductById = async (id: string, payload: ProductType): Promi
     },
     { $set: payload }
   )
+}
+
+export const deleteProductById = async (id: string): Promise<any> => {
+  return await productModel.findByIdAndDelete({ _id: id })
 }

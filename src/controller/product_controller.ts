@@ -62,9 +62,7 @@ export async function updateProduct(req: Request, res: Response): Promise<any> {
   const {
     params: { id }
   } = req
-
   const { error, value } = updateProductValidation(req.body)
-  console.log(typeof error)
   if (error) {
     logger.error(`Product - create = ${error.details[0].message}`)
     return res.status(422).send({ status: false, statusCode: 422, message: error.details[0].message })

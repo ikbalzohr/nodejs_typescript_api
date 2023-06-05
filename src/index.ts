@@ -4,6 +4,7 @@ import cors from 'cors'
 
 import { routes } from './routes'
 import { logger } from './utils/logger'
+import deserializeToken from './middleware/deserialized_token'
 
 // connect DB
 import './utils/connectToDB'
@@ -23,6 +24,8 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Headers', '*')
   next()
 })
+
+app.use(deserializeToken)
 
 routes(app)
 

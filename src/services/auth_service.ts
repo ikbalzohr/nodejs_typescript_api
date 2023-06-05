@@ -5,6 +5,6 @@ export const addUser = async (payload: UserType): Promise<any> => {
   return await userModel.create(payload)
 }
 
-export const getUserByEmail = async (email: string): Promise<any> => {
-  return await userModel.findOne({ email: { $regex: email, $options: 'i' } })
+export const findUserByEmail = async (email: string): Promise<any> => {
+  return await userModel.findOne({ email: { $regex: email, $options: 'si' } })
 }

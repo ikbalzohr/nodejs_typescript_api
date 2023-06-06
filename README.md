@@ -2,7 +2,7 @@
 Repo ini untuk inisialisasi awal REST API mengguanakan NodeJS, TypeScript, ESLint, Prettier, dan Husky.
 
 ### Branch API-RELEASE
-Branch ini merupakan finishing dari semua branch
+Branch ini merupakan finishing dari semua branch.
 Fitur:
 - Routing
 - Pino

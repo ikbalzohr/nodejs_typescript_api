@@ -20,3 +20,7 @@ Fitur yang tidak didukung:
 - Supertest
 - MongoDB Memory Server
 - Belum terdapat function createServer
+
+Terdapat branch tersendiri untuk unit testing
+
+Happy coding 😊😊

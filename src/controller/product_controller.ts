@@ -26,7 +26,7 @@ export async function createProduct(req: Request, res: Response): Promise<any> {
   try {
     const result = await addProductToDB(value)
     logger.info('Success add new product')
-    return res.status(201).send({ status: true, statusCode: 200, message: 'Add product success', data: result })
+    return res.status(200).send({ status: true, statusCode: 200, message: 'Add product success', data: result })
   } catch (error) {
     logger.error(`Product - create = ${error}`)
     return res.status(422).send({ status: false, statusCode: 422, message: error })

@@ -4,7 +4,16 @@ Repo ini untuk inisialisasi awal REST API mengguanakan NodeJS, TypeScript, ESLin
 ### Branch API-RELEASE
 Branch ini merupakan finishing dari semua branch.
 
-Fitur:
+### Alur Development
+- model - Buat model menggunakan mongoose
+- types - Buat type data
+- service - create/find/update/delete menggunakan mongoose
+- validation - Buat validasi setiap req.body yang masuk
+- controller - buat bussines logic etc
+- route - buat sub endpoint
+- index routes - buat endpoint
+
+### Fitur:
 - Routing
 - Pino
 - Cors
@@ -15,12 +24,13 @@ Fitur:
 - Authentication and authorization
 - Refresh Token
 
-Fitur yang tidak didukung:
+### Fitur yang tidak didukung:
 - Jest
 - Supertest
 - MongoDB Memory Server
 - Belum terdapat function createServer
 
+### Note
 Terdapat branch tersendiri untuk unit testing
 
 Happy coding 😊😊

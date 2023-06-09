@@ -1,5 +1,6 @@
 # nodejs_typescrit_init
 Bahasa Indonesia
+
 Repo ini untuk inisialisasi awal REST API mengguanakan NodeJS, TypeScript, ESLint, Prettier, dan Husky.
 
 ### Branch API-RELEASE

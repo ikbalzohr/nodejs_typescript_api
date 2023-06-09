@@ -1,7 +1,7 @@
 {
-  "name": "tppqu",
+  "name": "application",
   "version": "1.0.0",
-  "description": "ASN TPPQu",
+  "description": "Desc Application",
   "main": "index.js",
   "scripts": {
     "start": "npx tsc -w",
